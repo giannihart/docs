@@ -31,61 +31,172 @@ docker run -p 80:80 kennethreitz/httpbin
 
 Access the service at `http://localhost`.
 
-## Common endpoints
+## HTTP methods
 
-### Test GET requests
+Test different HTTP verbs:
 
 ```bash
 curl https://httpbin.org/get
+curl -X POST https://httpbin.org/post -d '{"name": "test"}'
+curl -X PUT https://httpbin.org/put -d 'data'
+curl -X PATCH https://httpbin.org/patch -d 'data'
+curl -X DELETE https://httpbin.org/delete
 ```
 
-Returns request headers, query parameters, and origin IP.
-
-### Test POST requests
+Use `/anything` to accept any HTTP method and return all request data:
 
 ```bash
-curl -X POST https://httpbin.org/post \
-  -H "Content-Type: application/json" \
-  -d '{"name": "test"}'
+curl -X POST https://httpbin.org/anything/mypath -d 'test'
 ```
 
-Returns the posted data along with request details.
-
-### Inspect request headers
-
-```bash
-curl https://httpbin.org/headers
-```
-
-Returns only the request headers.
-
-### Test authentication
-
-```bash
-curl https://httpbin.org/basic-auth/user/passwd \
-  -u user:passwd
-```
-
-### Generate response codes
-
-```bash
-curl https://httpbin.org/status/404
-```
-
-Returns a response with the specified HTTP status code.
-
-### Delay responses
-
-```bash
-curl https://httpbin.org/delay/3
-```
-
-Returns a response after a 3-second delay.
+## Request inspection
 
 ### Get client IP
 
 ```bash
 curl https://httpbin.org/ip
+```
+
+### View request headers
+
+```bash
+curl https://httpbin.org/headers
+```
+
+### Get user agent
+
+```bash
+curl https://httpbin.org/user-agent
+```
+
+## Authentication
+
+### Basic auth
+
+```bash
+curl https://httpbin.org/basic-auth/user/passwd -u user:passwd
+```
+
+### Bearer token
+
+```bash
+curl https://httpbin.org/bearer -H "Authorization: Bearer mytoken"
+```
+
+### Digest auth
+
+```bash
+curl https://httpbin.org/digest-auth/auth/user/passwd --digest -u user:passwd
+```
+
+## Status codes
+
+Generate any HTTP status code:
+
+```bash
+curl https://httpbin.org/status/404
+curl https://httpbin.org/status/500
+```
+
+Return a random status code from a list:
+
+```bash
+curl https://httpbin.org/status/200,404,500
+```
+
+## Dynamic data
+
+### Delayed responses
+
+```bash
+curl https://httpbin.org/delay/3
+```
+
+Returns after a delay (max 10 seconds).
+
+### Generate UUID
+
+```bash
+curl https://httpbin.org/uuid
+```
+
+### Random bytes
+
+```bash
+curl https://httpbin.org/bytes/1024
+```
+
+### Stream data
+
+```bash
+curl https://httpbin.org/stream/5
+```
+
+Streams 5 JSON responses.
+
+### Drip data
+
+```bash
+curl "https://httpbin.org/drip?duration=2&numbytes=10"
+```
+
+## Response formats
+
+```bash
+curl https://httpbin.org/json      # JSON
+curl https://httpbin.org/xml       # XML
+curl https://httpbin.org/html      # HTML
+curl https://httpbin.org/encoding/utf8  # UTF-8 encoded
+curl https://httpbin.org/gzip      # GZip encoded
+curl https://httpbin.org/deflate   # Deflate encoded
+curl https://httpbin.org/brotli    # Brotli encoded
+```
+
+## Cookies
+
+### Set cookies
+
+```bash
+curl -c - https://httpbin.org/cookies/set/mycookie/myvalue
+```
+
+### View cookies
+
+```bash
+curl -b "mycookie=myvalue" https://httpbin.org/cookies
+```
+
+### Delete cookies
+
+```bash
+curl https://httpbin.org/cookies/delete?mycookie=
+```
+
+## Redirects
+
+```bash
+curl -L https://httpbin.org/redirect/3           # Follow 3 redirects
+curl -L https://httpbin.org/redirect-to?url=https://example.com
+curl -L https://httpbin.org/relative-redirect/2  # Relative redirects
+curl -L https://httpbin.org/absolute-redirect/2  # Absolute redirects
+```
+
+## Images
+
+```bash
+curl https://httpbin.org/image/png -o image.png
+curl https://httpbin.org/image/jpeg -o image.jpg
+curl https://httpbin.org/image/webp -o image.webp
+curl https://httpbin.org/image/svg -o image.svg
+```
+
+## Caching
+
+```bash
+curl https://httpbin.org/cache              # Returns 304 if cached
+curl https://httpbin.org/cache/60           # Sets Cache-Control for 60s
+curl https://httpbin.org/etag/myetag        # ETag handling
+curl https://httpbin.org/response-headers?key=value  # Custom response headers
 ```
 
 ## Example response
