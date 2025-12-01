@@ -1,0 +1,112 @@
+---
+title: "httpbin quickstart"
+description: "Get started with httpbin for HTTP request and response testing"
+---
+
+## What is httpbin?
+
+httpbin is a simple HTTP request and response service useful for testing HTTP clients, debugging requests, and learning how HTTP works. It echoes back request data, making it easy to inspect headers, parameters, and payloads.
+
+## Prerequisites
+
+- Docker installed on your machine (for local usage)
+- A tool to make HTTP requests (curl, Postman, or any HTTP client)
+
+## Quick start
+
+### Option 1: Use the public service
+
+Make requests directly to the hosted service:
+
+```bash
+curl https://httpbin.org/get
+```
+
+### Option 2: Run locally with Docker
+
+```bash
+docker pull kennethreitz/httpbin
+docker run -p 80:80 kennethreitz/httpbin
+```
+
+Access the service at `http://localhost`.
+
+## Common endpoints
+
+### Test GET requests
+
+```bash
+curl https://httpbin.org/get
+```
+
+Returns request headers, query parameters, and origin IP.
+
+### Test POST requests
+
+```bash
+curl -X POST https://httpbin.org/post \
+  -H "Content-Type: application/json" \
+  -d '{"name": "test"}'
+```
+
+Returns the posted data along with request details.
+
+### Inspect request headers
+
+```bash
+curl https://httpbin.org/headers
+```
+
+Returns only the request headers.
+
+### Test authentication
+
+```bash
+curl https://httpbin.org/basic-auth/user/passwd \
+  -u user:passwd
+```
+
+### Generate response codes
+
+```bash
+curl https://httpbin.org/status/404
+```
+
+Returns a response with the specified HTTP status code.
+
+### Delay responses
+
+```bash
+curl https://httpbin.org/delay/3
+```
+
+Returns a response after a 3-second delay.
+
+### Get client IP
+
+```bash
+curl https://httpbin.org/ip
+```
+
+## Example response
+
+A typical GET request returns:
+
+```json
+{
+  "args": {},
+  "headers": {
+    "Accept": "*/*",
+    "Host": "httpbin.org",
+    "User-Agent": "curl/7.68.0"
+  },
+  "origin": "203.0.113.1",
+  "url": "https://httpbin.org/get"
+}
+```
+
+## Next steps
+
+- Explore all endpoints at [httpbin.org](https://httpbin.org)
+- Use httpbin to test your HTTP client libraries
+- Debug webhook integrations by inspecting request payloads
