@@ -19,7 +19,7 @@
               "index",
               "quickstart",
               "development",
-              "guides/httpbin-quickstart"
+              "httpbin-quickstart"
             ]
           },
           {
